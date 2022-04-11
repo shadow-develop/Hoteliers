@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = ()
 
 HOTELIERS_APPS = (
     'hoteliers.accounts',
+    'hoteliers.web',
 )
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + HOTELIERS_APPS
@@ -81,8 +82,12 @@ WSGI_APPLICATION = 'hoteliers.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Hoteliers',
+        'USER': 'postgres',
+        'PASSWORD': 'masterzahlesmo53',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -90,18 +95,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 # Internationalization
@@ -126,3 +131,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.HoteliersUser'
+
+LOGOUT_REDIRECT_URL = 'landing page'

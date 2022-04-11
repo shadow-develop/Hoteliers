@@ -1,0 +1,29 @@
+{% extends 'navigation.html' %}
+{% block content %}
+    <div class="text-center">
+        {% if user.first_name %}
+        <h1>Welcome {{ request.user.first_name }}</h1>
+        {% else %}
+        <h1>Welcome Hotelier</h1>
+        {% endif %}
+        <hr>
+        <a class="btn btn-lg btn-dark" href="#">Add Hotel</a>
+    </div>
+    <hr>
+    <hr>
+    {#  If There are Hotels : #}
+    <div class="card" style="width: 18rem;">
+        <a href="#"><img class="card-img-top"
+             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB0sYRNsS-NnUe78ZS21yD2XYwKpVEdlBH6g&usqp=CAU"
+             alt="Card image cap"></a>
+            <div style="background: gray" class="card-body">
+                <h5 class="card-title">Hotel Name</h5>
+                <p class="card-text">Stars: 5</p>
+                <div class="col-md-12 text-center">
+                    <a href="#" class="btn btn-dark">Manage</a>
+                </div>
+            </div>
+    </div>
+    {#  Else : #}
+    <h1>No Hotels Yet</h1>
+{% endblock %}

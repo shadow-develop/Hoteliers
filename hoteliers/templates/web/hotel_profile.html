@@ -1,0 +1,26 @@
+{% extends 'navigation.html' %}
+{% block content %}
+
+    <div class="d-flex">
+        <div class="d-inline p-2 w-50">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB0sYRNsS-NnUe78ZS21yD2XYwKpVEdlBH6g&usqp=CAU"
+                 alt="Card image cap"
+                 style="width: 23rem;">
+            <h5>Hotel Name</h5>
+            <h5>Stars: 5</h5>
+            <h5>Location: Maldives</h5>
+            <hr>
+                <a class="btn btn-secondary" href="#">Edit</a>
+                <a class="btn btn-danger" href="#">Delete</a>
+        </div>
+        <div class="d-inline p-2 w-50">
+
+
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Rooms: 18</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+                <a class="btn btn-secondary" href="#">Gallery</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
