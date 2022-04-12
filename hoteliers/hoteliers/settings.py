@@ -86,10 +86,10 @@ WSGI_APPLICATION = 'hoteliers.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Hoteliers',
-        'USER': 'postgres',
-        'PASSWORD': 'masterzahlesmo53',
-        'HOST': '127.0.0.1',
+        'NAME': 'd34fvm19iml0or',
+        'USER': 'qrscxmljpneuuj',
+        'PASSWORD': '1ba811b08f65beb903a6190ac30680daaa8424cb9ccdad822f91fa226ac45d69',
+        'HOST': 'ec2-63-32-248-14.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
