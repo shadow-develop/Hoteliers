@@ -1,15 +1,16 @@
-from django.contrib.auth import views as auth_views, login, logout
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.contrib.auth import views as auth_views, login, get_user_model
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
-from hoteliers.accounts.forms import CreateProfileForm, LoginProfileForm
+from hoteliers.accounts.forms import CreateUserForm, LoginUserForm, EditUserForm
 from hoteliers.accounts.models import User
+from hoteliers.common.views_mixins import RedirectToHome
 
 
-class UserRegisterView(views.CreateView):
-    form_class = CreateProfileForm
-    template_name = 'accounts/profile_register.html'
+class UserRegisterView(RedirectToHome, views.CreateView):
+    form_class = CreateUserForm
+    template_name = 'accounts/user_register.html'
     success_url = reverse_lazy('user home')
 
     def form_valid(self, form):
@@ -21,8 +22,8 @@ class UserRegisterView(views.CreateView):
 
 
 class UserLoginView(auth_views.LoginView):
-    form_class = LoginProfileForm
-    template_name = 'accounts/profile_login.html'
+    form_class = LoginUserForm
+    template_name = 'accounts/user_login.html'
     success_url = reverse_lazy('user home')
 
     def get_success_url(self):
@@ -31,6 +32,24 @@ class UserLoginView(auth_views.LoginView):
         return super().get_success_url()
 
 
+class UserDetailsView(views.DetailView):
+    model = User
+    template_name = 'accounts/user_details.html'
+    context_object_name = 'user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        return context
+
+
+class UserEditView(views.UpdateView):
+    model = User
+    pk = model.pk
+    form_class = EditUserForm
+    template_name = 'accounts/user_edit.html'
+    success_url = reverse_lazy('user home')
+
+
 class HomePage(auth_views.TemplateView):
     profile = User
-    template_name = 'accounts/home.html'
+    template_name = 'accounts/user_home.html'

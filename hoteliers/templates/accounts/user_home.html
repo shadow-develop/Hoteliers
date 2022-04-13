@@ -1,8 +1,8 @@
 {% extends 'navigation.html' %}
 {% block content %}
     <div class="text-center">
-        {% if user.first_name %}
-        <h1>Welcome {{ request.user.first_name }}</h1>
+        {% if user %}
+        <h1>Hello {{ user.user.first_name }}</h1>
         {% else %}
         <h1>Welcome Hotelier</h1>
         {% endif %}

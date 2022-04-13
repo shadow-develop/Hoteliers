@@ -71,7 +71,8 @@ class User(models.Model):
         null=True,
     )
 
-    phone_number = models.IntegerField(
+    phone_number = models.CharField(
+        max_length=NUMBER_MAX_LENGTH,
         unique=True,
         blank=True,
         null=True,

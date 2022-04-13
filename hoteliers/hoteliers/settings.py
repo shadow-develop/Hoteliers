@@ -128,8 +128,10 @@ STATICFILES_DIRS = (
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
+MEDIA_ROOT = [
+    BASE_DIR / 'media/',
+]
+MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -138,8 +140,7 @@ AUTH_USER_MODEL = 'accounts.HoteliersUser'
 LOGOUT_REDIRECT_URL = 'landing page'
 
 cloudinary.config(
-    cloud_name="sample",
-    api_key="874837483274837",
-    api_secret="a676b67565c6767a6767d6767f676fe1",
-    secure=True
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),
+    api_key=os.getenv('CLOUDINARY_API_KEY', None),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
 )
