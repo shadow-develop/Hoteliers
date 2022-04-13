@@ -12,24 +12,16 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from hoteliers.utils import is_production
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-01+n1-nkbt#d!*npo)w!ubeyoxzphm&^giu-&)r()h9cd1$4v0'
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+APP_ENVIRONMENT = os.getenv('APP_ENVIRONMENT')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'hoteliers.herokuapp.com',
-]
-
-# Application definition
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
 
 DJANGO_APPS = (
     'django.contrib.admin',
@@ -50,6 +42,7 @@ HOTELIERS_APPS = (
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + HOTELIERS_APPS
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -80,37 +73,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hoteliers.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'da9obqlns4k875',
-        'USER': 'sdikufhuahhukq',
-        'PASSWORD': 'f29b41079f754907b052be901e0e8b5cc59d70f731e043bddaf75f82ff5b8082',
-        'HOST': 'ec2-52-18-116-67.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'NAME': os.getenv('DB_NAME', 'Hoteliers'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'masterzahlesmo53'),
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = []
 
-AUTH_PASSWORD_VALIDATORS = [
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    # },
-    # {
-    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    # },
-]
+if is_production():
+    AUTH_PASSWORD_VALIDATORS.extend([
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        },
+    ])
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -127,7 +117,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 BASE_DIR_2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'

@@ -1,7 +1,7 @@
 from django.contrib.auth import models as auth_models
 from django.core.validators import MinLengthValidator
 from django.db import models
-
+from cloudinary import models as cloudinary_models
 from hoteliers.accounts.managers import HoteliersUserManager
 from hoteliers.common.validators import validate_letters_only
 
@@ -77,9 +77,7 @@ class User(models.Model):
         null=True,
     )
 
-    photo = models.ImageField(
-        validators=(),
-    )
+    photo = cloudinary_models.CloudinaryField('image')
 
     user = models.OneToOneField(
         HoteliersUser,
