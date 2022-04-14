@@ -1,4 +1,5 @@
 from django.contrib.auth import views as auth_views, login, get_user_model
+from django.contrib.auth import mixins as auth_mixins
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
@@ -47,9 +48,15 @@ class UserEditView(views.UpdateView):
     pk = model.pk
     form_class = EditUserForm
     template_name = 'accounts/user_edit.html'
-    success_url = reverse_lazy('user home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('user profile', kwargs={'pk': self.object.pk})
 
 
-class HomePage(auth_views.TemplateView):
+class HomePage(auth_mixins.LoginRequiredMixin, auth_views.TemplateView):
     profile = User
     template_name = 'accounts/user_home.html'

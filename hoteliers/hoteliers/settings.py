@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 from hoteliers.utils import is_production
 
@@ -34,7 +36,9 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
-THIRD_PARTY_APPS = ()
+THIRD_PARTY_APPS = (
+    'cloudinary',
+)
 
 HOTELIERS_APPS = (
     'hoteliers.accounts',
@@ -44,8 +48,8 @@ HOTELIERS_APPS = (
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + HOTELIERS_APPS
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,7 +124,7 @@ USE_TZ = True
 
 BASE_DIR_2 = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
@@ -128,9 +132,7 @@ STATICFILES_DIRS = (
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_ROOT = [
-    BASE_DIR / 'media/',
-]
+MEDIA_ROOT = BASE_DIR / 'mediafiles/',
 MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -139,8 +141,16 @@ AUTH_USER_MODEL = 'accounts.HoteliersUser'
 
 LOGOUT_REDIRECT_URL = 'landing page'
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# cloudinary.config(
+#     cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),
+#     api_key=os.getenv('CLOUDINARY_API_KEY', None),
+#     api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
+# )
+# The above gave `Must supply api_key`
 cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', None),
-    api_key=os.getenv('CLOUDINARY_API_KEY', None),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET', None),
+    cloud_name="hnzb9b0rw",
+    api_key="955968852335621",
+    api_secret="-uFSUcQ16wccFVKsdFMPL79dpr8"
 )
