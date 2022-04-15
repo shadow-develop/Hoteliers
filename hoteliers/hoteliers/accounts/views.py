@@ -1,5 +1,5 @@
 from django.contrib.auth import views as auth_views, login, get_user_model
-from django.contrib.auth import mixins as auth_mixins
+
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views import generic as views
@@ -16,8 +16,6 @@ class UserRegisterView(RedirectToHome, views.CreateView):
 
     def form_valid(self, form):
         result = super().form_valid(form)
-        # user => self.object
-        # request => self.request
         login(self.request, self.object)
         return result
 
@@ -54,9 +52,6 @@ class UserEditView(views.UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('user profile', kwargs={'pk': self.object.pk})
+        return reverse_lazy('user details', kwargs={'pk': self.object.pk})
 
 
-class HomePage(auth_mixins.LoginRequiredMixin, auth_views.TemplateView):
-    profile = User
-    template_name = 'accounts/user_home.html'
