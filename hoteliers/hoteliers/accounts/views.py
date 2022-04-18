@@ -8,6 +8,7 @@ from django.views import generic as views
 from hoteliers.accounts.forms import CreateUserForm, LoginUserForm, EditUserForm
 from hoteliers.accounts.models import User
 from hoteliers.common.views_mixins import RedirectToHome
+from hoteliers.web.models import Hotel
 
 
 class UserRegisterView(RedirectToHome, views.CreateView):
@@ -36,6 +37,14 @@ class UserDetailsView(views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+
+        hotels = list(Hotel.objects.filter(owner_id=self.object.user_id))
+        total_hotels_count = len(hotels)
+
+        context.update({
+            'hotels': hotels,
+            'total_hotels_count': total_hotels_count,
+        })
         return context
 
 

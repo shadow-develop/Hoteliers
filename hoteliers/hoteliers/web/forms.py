@@ -12,7 +12,7 @@ class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
     def save(self, commit=True):
         hotel = super().save(commit=False)
 
-        hotel.user = self.user
+        hotel.owner = self.user
         if commit:
             hotel.save()
 
@@ -20,4 +20,4 @@ class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Hotel
-        fields = ('name', 'stars', 'location', 'photo', 'description', 'owner')
+        fields = ('name', 'stars', 'location', 'photo', 'description',)
