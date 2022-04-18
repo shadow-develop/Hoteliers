@@ -1,2 +1,2 @@
-web: gunicorn --pythonpath hoteliers hoteliers.wsgi
+web: gunicorn hoteliers.wsgi
 release: python hoteliers/manage.py migrate
