@@ -1,4 +1,5 @@
-from django.contrib.auth import views as auth_views, login, get_user_model
+from django.contrib.auth import views as auth_views, login
+from django.http import request
 
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
@@ -23,12 +24,9 @@ class UserRegisterView(RedirectToHome, views.CreateView):
 class UserLoginView(auth_views.LoginView):
     form_class = LoginUserForm
     template_name = 'accounts/user_login.html'
-    success_url = reverse_lazy('user home')
 
     def get_success_url(self):
-        if self.success_url:
-            return self.success_url
-        return super().get_success_url()
+        return reverse_lazy('user home', kwargs={'pk': self.request.user.pk})
 
 
 class UserDetailsView(views.DetailView):

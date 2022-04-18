@@ -4,7 +4,7 @@ from hoteliers.web.views import LandingPageView, about_page, HotelDetailsView, H
 
 urlpatterns = [
     path('', LandingPageView.as_view(), name='landing page'),
-    path('home/', HomePage.as_view(), name='user home'),
+    path('home/<int:pk>', HomePage.as_view(), name='user home'),
     path('about/', about_page, name='about'),
 
     path('hotel/create/<int:pk>/', HotelCreateView.as_view(), name='hotel create'),

@@ -11,13 +11,13 @@
     </div>
     <hr style="height: 75px">
     {#  If There are Hotels : #}
-    {% if hotel %}
+    {% if hotels %}
         <div class="container mb-5">
             <div class="row mb-5">
-                {% for h in hotel %}
+                {% for h in hotels %}
                     <div class="card ml-3 mb-3" style="width: 25rem;margin: 20px">
                         <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
-                                                                      src="{{ hotel.photo }}" alt="Card image cap"></a>
+                                                                      src="{{ h.photo }}" alt="Card image cap"></a>
                         <div style="background: gray" class="card-body">
                             <h5 class="card-title">{{ h.name }}</h5>
                             <p class="card-text">Stars: {{ h.stars }}</p>
