@@ -20,4 +20,11 @@ class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Hotel
-        fields = ('name', 'stars', 'location', 'photo', 'description',)
+        fields = ('name', 'stars', 'location', 'description', 'photo',)
+        widgets = {
+            'description': forms.Textarea(
+                attrs={
+                    'rows': 5,
+                }
+            ),
+        }

@@ -16,8 +16,14 @@
             <div class="row mb-5">
                 {% for h in hotels %}
                     <div class="card ml-3 mb-3" style="width: 25rem;margin: 20px">
-                        <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
-                                                                      src="{{ h.photo }}" alt="Card image cap"></a>
+                        {% if h.photo %}
+                            <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
+                                                                          src="{{ h.photo }}" alt=""></a>
+                        {% else %}
+                            <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
+                                                                          src="https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
+                                                                          alt="" height="230"></a>
+                        {% endif %}
                         <div style="background: gray" class="card-body">
                             <h5 class="card-title">{{ h.name }}</h5>
                             <p class="card-text">Stars: {{ h.stars }}</p>

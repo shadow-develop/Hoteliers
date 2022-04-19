@@ -49,6 +49,7 @@ class HotelCreateView(views.CreateView):
 class HotelDetailsView(views.DetailView):
     model = Hotel
     template_name = 'web/hotel_details.html'
+    context_object_name = 'hotel'
 
 
 def about_page(request):
