@@ -27,6 +27,11 @@ class Hotel(models.Model):
         null=True,
     )
 
+    rooms = models.IntegerField(
+        blank=True,
+        null=True,
+    )
+
     location = models.CharField(
         max_length=LOCATION_MAX_LENGTH,
         validators=(
@@ -41,12 +46,21 @@ class Hotel(models.Model):
         blank=True,
         null=True,
     )
-    photo = cloudinary_models.CloudinaryField('image', blank=True, null=True,)
+
+    photo = models.ImageField(null=True, blank=True, upload_to='photos/')
 
     owner = models.ForeignKey(
         UserModel,
         on_delete=models.CASCADE,
     )
 
+    gallery_photos = models.IntegerField(default=0)
+
     class Meta:
         unique_together = ('owner', 'name')
+
+
+class HotelGalleryPhoto(models.Model):
+    photo = models.ImageField(upload_to='photos/')
+
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)

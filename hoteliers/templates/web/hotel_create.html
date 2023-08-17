@@ -7,7 +7,7 @@
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
                             <h2 class="text-uppercase text-center mb-5">Hotel Creation</h2>
-                            <form method="post" action="{% url 'hotel create' request.user.id %}">
+                            <form method="post" action="{% url 'hotel create' request.user.id %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form }}
                                 <div class="d-flex justify-content-center">

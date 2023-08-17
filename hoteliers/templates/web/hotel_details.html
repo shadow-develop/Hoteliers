@@ -1,8 +1,15 @@
 {% extends 'navigation.html' %}
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
     <div class="d-flex justify-content-left" style="margin: 50px">
         {% if hotel.photo %}
-            <img src="{{ hotel.photo }}"
+            <img src="{{ hotel.photo.url }}"
                  alt="" width="224" height="225">
         {% else %}
             <img src="https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
@@ -14,8 +21,8 @@
             <h2><u>Stars:</u> {{ hotel.stars }}</h2>
             <h2><u>Location:</u> {{ hotel.location }}</h2>
             <div>
-                <a class="btn btn-dark" href="#">Edit</a>
-                <a class="btn btn-danger" href="#">Delete</a>
+                <a class="btn btn-dark" href="{% url 'hotel edit' hotel.pk %}">Edit</a>
+                <a class="btn btn-danger" href="{% url 'hotel delete' hotel.pk %}">Delete</a>
             </div>
         </div>
     </div>
@@ -31,9 +38,9 @@
             {% endif %}
         </label>
         <div class="d-flex flex-column" style="margin: 15px">
-            <h2><u>Rooms:</u> Number of rooms(needs to be made)</h2>
+            <h2><u>Rooms:</u> {{ hotel.rooms }}</h2>
             <hr>
-            <a class="btn btn-dark" href="#" style="width: 135px;">Gallery</a>
+            <a class="btn btn-dark" href="{% url 'hotel gallery' hotel.pk %}" style="width: 135px;">Gallery</a>
         </div>
     </div>
 {% endblock %}

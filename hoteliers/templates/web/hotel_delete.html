@@ -1,0 +1,21 @@
+{% extends 'navigation.html' %}
+{% block content %}
+    <h1 class="text-center">Really Delete {{ hotel.name }}?</h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form method="post" action="{% url 'hotel delete' hotel.pk %}">
+                {% csrf_token %}
+                {{ form }}
+                <div class="d-flex justify-content-center" style="margin: 15px">
+                    <div>
+                        <button class="btn btn-danger mt-2" type="submit">Delete</button>
+                        <a class="btn btn-secondary mt-2" href="{% url 'hotel details' hotel.pk %}" type="submit">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+{% endblock %}

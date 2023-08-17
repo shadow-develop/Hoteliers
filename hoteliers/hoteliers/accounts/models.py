@@ -78,7 +78,7 @@ class User(models.Model):
         null=True,
     )
 
-    photo = cloudinary_models.CloudinaryField('image')
+    photo = models.ImageField(null=True, blank=True, upload_to='photos/')
 
     user = models.OneToOneField(
         HoteliersUser,

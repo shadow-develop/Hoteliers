@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins, get_user_model
-from hoteliers.common.views_mixins import RedirectToHome
-from hoteliers.web.forms import HotelCreateForm
+from hoteliers.common.views_mixins import RedirectToHome, SuccessMessageMixin
+from hoteliers.web.forms import HotelCreateForm, HotelDeleteForm, HotelEditForm
 from hoteliers.web.models import Hotel
 
 UserModel = get_user_model()
@@ -33,9 +33,10 @@ class HomePage(auth_mixins.LoginRequiredMixin, views.ListView):
         return context
 
 
-class HotelCreateView(views.CreateView):
+class HotelCreateView(SuccessMessageMixin, views.CreateView):
     form_class = HotelCreateForm
     template_name = 'web/hotel_create.html'
+    success_message = 'Congratulations! The hotel %(name)s was just added to your hotels list'
 
     def get_success_url(self):
         return reverse_lazy('hotel details', kwargs={'pk': self.object.pk})
@@ -52,5 +53,41 @@ class HotelDetailsView(views.DetailView):
     context_object_name = 'hotel'
 
 
+class HotelEditView(SuccessMessageMixin, views.UpdateView):
+    model = Hotel
+    template_name = 'web/hotel_edit.html'
+    form_class = HotelEditForm
+    success_message = "%(name)s details updated successfully!"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('hotel details', kwargs={'pk': self.object.pk})
+
+
+class HotelDeleteView(SuccessMessageMixin, views.DeleteView):
+    model = Hotel
+    form_class = HotelDeleteForm
+    template_name = 'web/hotel_delete.html'
+    success_message = 'Hotel deleted successfully!'
+
+    def get_success_url(self):
+        return reverse_lazy('user home', kwargs={'pk': self.request.user.pk})
+
+
 def about_page(request):
     return render(request, 'unauth/about_page.html')
+
+
+class HotelProfileView(views.TemplateView):
+    template_name = 'web/hotel_profile.html'
+
+
+class HotelGalleryView(views.ListView):
+    model = Hotel
+    template_name = 'web/hotel_gallery.html'
+    context_object_name = 'hotel'
+    object = UserModel
+

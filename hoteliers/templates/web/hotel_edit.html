@@ -6,8 +6,8 @@
                 <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body p-5">
-                            <h2 class="text-uppercase text-center mb-5">Edit Your Profile</h2>
-                            <form method="post" action="{% url 'user edit' request.user.id %}" enctype="multipart/form-data">
+                            <h2 class="text-uppercase text-center mb-5">Edit Your Hotel Details</h2>
+                            <form method="post" action="{% url 'hotel edit' hotel.pk %}" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {{ form }}
                                 <div class="d-flex justify-content-center" style="margin: 15px">

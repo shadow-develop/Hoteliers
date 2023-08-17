@@ -3,7 +3,7 @@ from django.contrib.auth import forms as auth_forms, get_user_model
 from hoteliers.common.helpers import BootstrapFormMixin
 from django import forms
 
-from hoteliers.accounts.models import User
+from hoteliers.accounts.models import User, HoteliersUser
 
 
 class CreateUserForm(BootstrapFormMixin, auth_forms.UserCreationForm):
@@ -60,4 +60,19 @@ class EditUserForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'gender', 'date_of_birth', 'phone_number', 'photo')
+        fields = '__all__'
+        exclude = ['user']
+
+
+class DeleteUserForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = HoteliersUser
+        fields = ()

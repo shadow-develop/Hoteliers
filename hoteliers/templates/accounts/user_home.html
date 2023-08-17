@@ -1,5 +1,13 @@
 {% extends 'navigation.html' %}
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="text-center alert alert-{{ message.tags }}">
+                {{ message|safe }}
+            </div>
+            {#                <script> alert('{{ message }}')</script>#}
+        {% endfor %}
+    {% endif %}
     <div class="text-center">
         {% if user %}
             <h1>Hello {{ user.user.first_name }}</h1>
@@ -18,7 +26,7 @@
                     <div class="card ml-3 mb-3" style="width: 25rem;margin: 20px">
                         {% if h.photo %}
                             <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
-                                                                          src="{{ h.photo }}" alt=""></a>
+                                                                          src="{{ h.photo.url }}" alt=""></a>
                         {% else %}
                             <a href="{% url 'hotel details' h.id %}"><img class="card-img-top"
                                                                           src="https://t3.ftcdn.net/jpg/04/34/72/82/360_F_434728286_OWQQvAFoXZLdGHlObozsolNeuSxhpr84.jpg"
@@ -28,7 +36,7 @@
                             <h5 class="card-title">{{ h.name }}</h5>
                             <p class="card-text">Stars: {{ h.stars }}</p>
                             <div class="col-md-12 text-center">
-                                <a href="#" class="btn btn-dark">Manage</a>
+                                <a href="{% url 'hotel details' h.id %}" class="btn btn-dark">Manage</a>
 
                             </div>
                         </div>

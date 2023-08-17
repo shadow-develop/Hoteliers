@@ -20,7 +20,7 @@ class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Hotel
-        fields = ('name', 'stars', 'location', 'description', 'photo',)
+        fields = ('name', 'stars', 'rooms', 'location', 'description', 'photo',)
         widgets = {
             'description': forms.Textarea(
                 attrs={
@@ -28,3 +28,44 @@ class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
                 }
             ),
         }
+
+
+class HotelEditForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    class Meta:
+        model = Hotel
+        fields = '__all__'
+        exclude = ['owner']
+
+
+class HotelDeleteForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._init_bootstrap_form_controls()
+
+    def save(self, commit=True):
+        self.instance.delete()
+        return self.instance
+
+    class Meta:
+        model = Hotel
+        fields = ()
+
+
+class HotelGalleryPhotoForm(BootstrapFormMixin, forms.ModelForm):
+    def __init__(self, hotel, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.hotel = hotel
+        self._init_bootstrap_form_controls()
+
+    def save(self, commit=True):
+        hotel = super().save(commit=False)
+
+        hotel.owner = self.user
+        if commit:
+            hotel.save()
+
+        return hotel
