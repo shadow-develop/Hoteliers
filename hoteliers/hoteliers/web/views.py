@@ -4,7 +4,7 @@ from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins, get_user_model
 from hoteliers.common.views_mixins import RedirectToHome, SuccessMessageMixin
 from hoteliers.web.forms import HotelCreateForm, HotelDeleteForm, HotelEditForm
-from hoteliers.web.models import Hotel
+from hoteliers.web.models import Hotel, HotelGalleryPhoto
 
 UserModel = get_user_model()
 
@@ -81,13 +81,13 @@ def about_page(request):
     return render(request, 'unauth/about_page.html')
 
 
+# TODO: That was a test View - it needs to be deleted!
 class HotelProfileView(views.TemplateView):
     template_name = 'web/hotel_profile.html'
 
 
 class HotelGalleryView(views.ListView):
-    model = Hotel
+    model = HotelGalleryPhoto
     template_name = 'web/hotel_gallery.html'
-    context_object_name = 'hotel'
-    object = UserModel
-
+    context_object_name = 'photos'
+    object = HotelGalleryPhoto

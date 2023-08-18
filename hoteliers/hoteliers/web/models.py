@@ -54,13 +54,14 @@ class Hotel(models.Model):
         on_delete=models.CASCADE,
     )
 
-    gallery_photos = models.IntegerField(default=0)
-
     class Meta:
         unique_together = ('owner', 'name')
 
 
 class HotelGalleryPhoto(models.Model):
-    photo = models.ImageField(upload_to='photos/')
+    photo = models.ImageField(null=True, blank=True, upload_to='photos/')
 
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    owned_by_hotel = models.ForeignKey(
+        Hotel,
+        on_delete=models.CASCADE,
+    )

@@ -4,7 +4,7 @@ from django.contrib import admin
 
 # Register your models here.
 from hoteliers.accounts.models import HoteliersUser, User
-from hoteliers.web.models import Hotel
+from hoteliers.web.models import Hotel, HotelGalleryPhoto
 
 
 @admin.register(HoteliersUser)
@@ -22,3 +22,8 @@ class UserAdmin(admin.ModelAdmin):
 class HotelAdmin(admin.ModelAdmin):
     list_filter = ('owner_id', 'location', 'stars')
     list_display = ('name', 'location', 'stars')
+
+
+@admin.register(HotelGalleryPhoto)
+class HotelGalleryPhotoAdmin(admin.ModelAdmin):
+    pass

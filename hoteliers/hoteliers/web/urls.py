@@ -13,5 +13,4 @@ urlpatterns = [
     path('hotel/edit/<int:pk>/', HotelEditView.as_view(), name='hotel edit'),
     path('hotel/delete/<int:pk>/', HotelDeleteView.as_view(), name='hotel delete'),
     path('hotel/gallery/<int:pk>/', HotelGalleryView.as_view(), name='hotel gallery'),
-    # path('hotel/profile/', HotelProfileView.as_view(), name='hotel profile'), - TODO: It doesn't load the page
 ]
