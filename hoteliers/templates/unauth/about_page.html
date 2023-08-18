@@ -1,4 +1,35 @@
 {% extends 'navigation.html' %}
 {% block content %}
-    <h1 align="center">Welcome to <b>Hoteliers</b>!</h1>
+    <h1 style="text-align: center">Welcome to Hoteliers!</h1>
+    <div style="padding: 60px" class="col-md-12 text-center">
+        <p style="font-size: 2.5vh">
+            This is a website that caters to hoteliers worldwide and is still under development.
+            <br>Here, our users can easily list their hotels and manage them without wasting any more paper.<br>
+            If you want to manage your reservations more easily as a hotelier, this is the place for you.<br>
+            At the moment, you can only list your hotels and update their details.<br><br><br>
+            <b>The upcoming updates will bring amazing features to this website. Such features will be:</b>
+        <ul>
+            <li>
+                A calendar table that includes all rooms in your hotel will enable you to quickly manage it.
+                You will be able to conveniently colour sections of the calendar table, so you would know
+                which room is reserved, occupied, ready for cleaning and many more.<br><br>
+            </li>
+            <li>
+                Friends section with a chat system that will enable you and your fellow hoteliers' colleagues to share
+                experiences and help each other with the reservations. Having friends will allow you to enter each
+                other's
+                profiles and check your hotels and photos added to them.
+            </li>
+        </ul>
+        </p>
+    </div>
+
+    {% if not request.user.is_authenticated %}
+
+        <div class="flex-row" style="text-align: center">
+            <p style="font-size: 2.5vh">Are you interested? Click on the button bellow to create a new
+                account!</p>
+            <a href="{% url 'user register' %}" class="btn btn-lg btn-dark">Sign up</a>
+        </div>
+    {% endif %}
 {% endblock %}

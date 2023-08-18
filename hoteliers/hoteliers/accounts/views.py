@@ -74,6 +74,7 @@ class UserDeleteView(SuccessMessageMixin, views.DeleteView):
     model = HoteliersUser
     form_class = DeleteUserForm
     template_name = 'accounts/user_delete.html'
+    success_message = "Account deleted successfully!"
 
     def get_success_url(self):
         return reverse_lazy('landing page')

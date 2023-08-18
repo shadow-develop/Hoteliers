@@ -1,17 +1,23 @@
 {% extends 'navigation.html' %}
 {% block content %}
-<div class="col-md-12 text-center">
-    <img style="width: 30%"
-         src="https://images.twinkl.co.uk/tr/image/upload/t_illustration/illustation/Atlantis-Hotel-Black-and-White.png"
-         alt="">
+    <div class="col-md-12 text-center">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="text-center alert alert-{{ message.tags }}">
+                    {{ message|safe }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <img style="width: 30%"
+             src="https://images.twinkl.co.uk/tr/image/upload/t_illustration/illustation/Atlantis-Hotel-Black-and-White.png"
+             alt="">
 
-    <h1 class="display-4">Welcome to Hoteliers</h1>
-    {#    <p class="lead">Share your pets photos.</p>#}
-    <hr class="my-4">
-    <div class="flex-row">
-        <a href="{% url 'user login' %}" class="btn btn-lg btn-dark">Log in</a>
+        <h1 class="display-4">Welcome to Hoteliers</h1>
+        <hr class="my-4">
+        <div class="flex-row">
+            <a href="{% url 'user login' %}" class="btn btn-lg btn-dark">Log in</a>
 
-        <a href="{% url 'user register' %}" class="btn btn-lg btn-dark">Sign up</a>
+            <a href="{% url 'user register' %}" class="btn btn-lg btn-dark">Sign up</a>
+        </div>
     </div>
-</div>
 {% endblock %}
