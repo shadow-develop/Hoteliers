@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import mixins as auth_mixins, get_user_model
 from hoteliers.common.views_mixins import RedirectToHome, SuccessMessageMixin
-from hoteliers.web.forms import HotelCreateForm, HotelDeleteForm, HotelEditForm
+from hoteliers.web.forms import HotelCreateForm, HotelDeleteForm, HotelEditForm, HotelGalleryPhotoForm
 from hoteliers.web.models import Hotel, HotelGalleryPhoto
 
 UserModel = get_user_model()
@@ -81,13 +81,32 @@ def about_page(request):
     return render(request, 'unauth/about_page.html')
 
 
-# TODO: That was a test View - it needs to be deleted!
-class HotelProfileView(views.TemplateView):
-    template_name = 'web/hotel_profile.html'
-
-
-class HotelGalleryView(views.ListView):
-    model = HotelGalleryPhoto
+class HotelGalleryView(views.DetailView):
+    model = Hotel
     template_name = 'web/hotel_gallery.html'
     context_object_name = 'photos'
-    object = HotelGalleryPhoto
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+
+        photos = list(HotelGalleryPhoto.objects.filter(owned_by_hotel=self.object.id))
+
+        context.update({
+            'photos': photos,
+            'hotel': Hotel,
+        })
+        return context
+
+
+class AddGalleryPhotoView(views.CreateView):
+    form_class = HotelGalleryPhotoForm
+    template_name = 'web/hotel_add_gallery_photo.html'
+    success_message = 'A new photo has been added to your hotel gallery!'
+
+    def get_success_url(self):
+        return reverse_lazy('hotel gallery', kwargs={'pk': self.object.pk})
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs

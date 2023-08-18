@@ -1,6 +1,5 @@
 {% extends 'navigation.html' %}
 {% block content %}
-    <h1>Hotel Gallery Page</h1>
     {% if photos %}
         <div class="container mb-5">
             <div class="row mb-5">
@@ -10,10 +9,13 @@
                     </div>
                 {% endfor %}
             </div>
+            <a style="text-align: center" class="btn btn-lg btn-dark" href="{% url 'add photo' request.user.id %}">Add
+                more photos</a>
         </div>
     {% else %}
         <div class="text-center">
             <h1>No Photos Yet</h1>
+            <a class="btn btn-lg btn-dark" href="{% url 'add photo' request.user.id %}">Add a photo</a>
         </div>
     {% endif %}
 {% endblock %}

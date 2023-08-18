@@ -1,7 +1,7 @@
 from django.urls import path
 
 from hoteliers.web.views import LandingPageView, about_page, HotelDetailsView, HotelCreateView, HomePage, \
-    HotelDeleteView, HotelEditView, HotelGalleryView ,HotelProfileView
+    HotelDeleteView, HotelEditView, HotelGalleryView, AddGalleryPhotoView
 
 urlpatterns = [
     path('', LandingPageView.as_view(), name='landing page'),
@@ -13,4 +13,5 @@ urlpatterns = [
     path('hotel/edit/<int:pk>/', HotelEditView.as_view(), name='hotel edit'),
     path('hotel/delete/<int:pk>/', HotelDeleteView.as_view(), name='hotel delete'),
     path('hotel/gallery/<int:pk>/', HotelGalleryView.as_view(), name='hotel gallery'),
+    path('hotel/gallery/add_photo/<int:pk>/', AddGalleryPhotoView.as_view(), name='add photo'),
 ]

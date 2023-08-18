@@ -1,6 +1,6 @@
 from django import forms
 from hoteliers.common.helpers import BootstrapFormMixin
-from hoteliers.web.models import Hotel
+from hoteliers.web.models import Hotel, HotelGalleryPhoto
 
 
 class HotelCreateForm(BootstrapFormMixin, forms.ModelForm):
@@ -62,10 +62,15 @@ class HotelGalleryPhotoForm(BootstrapFormMixin, forms.ModelForm):
         self._init_bootstrap_form_controls()
 
     def save(self, commit=True):
-        hotel = super().save(commit=False)
+        photo = super().save(commit=False)
 
-        hotel.owner = self.user
+        photo.owned_by_hotel = self.hotel
         if commit:
-            hotel.save()
+            photo.save()
 
-        return hotel
+        return photo
+
+    class Meta:
+        model = HotelGalleryPhoto
+        fields = '__all__'
+        exclude = ['owned_by_hotel']

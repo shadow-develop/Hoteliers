@@ -65,3 +65,6 @@ class HotelGalleryPhoto(models.Model):
         Hotel,
         on_delete=models.CASCADE,
     )
+
+    class Meta:
+        unique_together = ('owned_by_hotel', 'photo')
